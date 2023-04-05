@@ -1,41 +1,51 @@
-//let userMail;
-//let userPassword;
-//let email = "sophie.bluel@test.tld";
-//email = document.querySelector(".usermail");
-//let password = "S0phie";
-//password = document.querySelector(".password");
-//const form = document.querySelectorAll(".form");
-//const errorElement = document.querySelector(".error");
-//const userConnect = document.querySelector(".connexion")
+// Récupération de l'élément du DOM qui accueille le formulaire de connexion
 
-//const login = () => {
-//    if userMail === email && userPassword === password;
-//    return 
-//}
+const formLogIn = document.querySelector(".login_form");
 
-//form.addEventListenner("click", login())
+// Récupération de l'email et du mot de passe saisis
 
-const sophieBluel = {
-    "email":"sophie.bluel@test.tld",
-    "password":"S0phie"
-};
+    formLogIn.addEventListener("submit", function(event){
+        event.preventDefault();
+        let email = document.querySelector(".usermail").value;
+        let password = document.querySelector(".userpassword").value;
+        let sophieBluel = {email, password};
 
-const login = async () => {
-    const response = await fetch ("http://localhost:5678/api/users/login", {
-        method :'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(sophieBluel)
-    })
+// Création de la fonction qui compare les données saisies à celles de l'API
+
+const getInfo = async () => {
+
+let response = await fetch('http://localhost:5678/api/users/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json; charset=utf-8'},
+    body: JSON.stringify(sophieBluel) 
+});
+
+// Récupération du Token
+
+let result = await response.json();
+
+// Stockage du Token
+
+sessionStorage.setItem("token", result.token);
+
+// Conditions pour la connexion
+
+if (typeof result.token === "undefined") {
+    alert("Erreur dans l’identifiant ou le mot de passe");
+}
+else {
+    window.location = "index.html";
+}
+
+}
+
+getInfo();
+
+});
 
 
-const result = await response.json();
-alert(result.message);
+    
+    
 
-};
 
-login();
-
-console.log(login);
 

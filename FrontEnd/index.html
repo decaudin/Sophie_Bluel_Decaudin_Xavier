@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<script src="https://kit.fontawesome.com/088e783ccc.js" defer crossorigin="anonymous"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
@@ -13,20 +14,31 @@
 </head>
 <body>
 <header>
+	<div class="edition">
+		<i class="fa-regular fa-pen-to-square"></i>
+		<p class="edition_mode">Mode édition</p>
+		<p class="change">publier les changements</p>
+	</div>
+	<div class="titre_nav">
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li><a class="ancre_login"href="login.html">login</a></li>
+			<li class="ancre_login">login</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
+	</div>
 </header>
 <main>
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<div class="modify_1">
+				<i class="fa-regular fa-pen-to-square"></i>
+				<p class="modif">modifier</p>
+			</div>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -36,7 +48,57 @@
 		</article>
 	</section>
 	<section id="portfolio">
+		<div class="titre_projet">
 		<h2>Mes Projets</h2>
+		<div class="modify_2">
+			<i class="fa-regular fa-pen-to-square"></i>
+			<p class="modif">modifier</p>
+		</div>
+		</div>
+		<aside class="modal">
+			<div class="modal_gallery">
+				<div class="close_first_modal">
+					<i class="fa-solid fa-xmark"></i>
+				</div>
+				<h1 class="title_modal">Galerie photo</h1>
+				<div class="image_mini"></div>
+				<div class="border"></div>
+				<p class="add">Ajouter une photo</p>
+				<p class="delete">Supprimer la galerie</p>
+			</div>
+			<div class="modal_add">
+				<div class="modal_icons">
+					<div class="arrow">
+						<i class="fa-solid fa-arrow-left"></i>
+					</div>
+					<div class="close">
+						<i class="fa-solid fa-xmark"></i>
+					</div>
+				</div>
+				<h1 class="title_modal">Ajout photo</h1>
+				<div class="add_works">
+					<i class="fa-sharp fa-regular fa-image"></i>
+					<button class="add_picture">+ Ajouter photo</button>
+					<p class="format_size">jpg, png : 4mo max</p>
+				</div>
+				<div class="title_picture">
+					<label class="title_name" for="title">Titre</label>
+					<input class="title_form" type="title" id="title" name="title">
+				</div>
+				<div class="category_picture">
+					<label class="category_name" for="title">Catégorie</label>
+					<select class="category_form">
+						<option value=""></option>
+						<option value="1">Objets</option>
+						<option value="2">Appartements</option>
+						<option value="3">Hôtels & restaurants</option>
+					</select>
+				</div>
+				<div class="border2"></div>
+				<p class="validate">Valider</p>
+			</div>
+		</aside>
+		</div>
 		<div class="filtres">
 			<button class="btn_tous">Tous</button>
 			<button class="btn_objets">Objets</button>

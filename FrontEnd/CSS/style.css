@@ -109,7 +109,7 @@ h2{
 	margin-bottom: 6px;
 }
 
-.form {
+.login_form {
 	display: flex;
 	flex-direction: column;
 }
