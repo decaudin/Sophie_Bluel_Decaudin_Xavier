@@ -109,7 +109,7 @@ h2{
 	margin-bottom: 6px;
 }
 
-.login_form {
+#login_form {
 	display: flex;
 	flex-direction: column;
 }
@@ -136,10 +136,13 @@ h2{
 	background-color: #1D6154;
 	color: white;
 	margin: auto;
-	padding-top: 7px;
-	padding-bottom: 7px;
+	padding: 10px;
+	padding-left: 35px;
+	padding-right: 35px;
 	margin-top: 40px;
 	margin-bottom: 40px;
+	cursor: pointer;
+
 }
 
 .forget {

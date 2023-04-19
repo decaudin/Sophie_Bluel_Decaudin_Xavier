@@ -1,30 +1,26 @@
-// Création d'une fonction récupération et affichage des données
+// Etape 1 --------------------------- Création d'une fonction de récupération et d'affichage des données getData() --------------------------- //
 
-// Récupération des données depuis l'API dans le fichier works
+// Etape 1.1 : Récupération des données depuis l'API dans le tableau works
 
  const getData = async () => {
     let response = await fetch("http://localhost:5678/api/works");
     let works = await response.json();
 
-//Création d'une fonction Affichage des Travaux
+// Etape 1.2 : Création d'une fonction displayWorks d'affichage des Travaux
 
-const displayWorks = async (namearray) => {
-  
-// Création d'une boucle
+const displayWorks = async (nameArray) => {
 
-for (let i = 0; i < namearray.length; i++) {
+for (let i = 0; i < nameArray.length; i++) {
 
-const project = namearray[i];
+const project = nameArray[i];
     
 // Récupération de l'élément du DOM qui accueillera les projets de Sophie Bluel
     
 const sectionGallery = document.querySelector(".gallery");
     
-// Création d'une balise dédiée à un projet
+// Création des balises et récupération de l'URL et du titre du projet
     
 const projectElement = document.createElement("project");
-    
-// Création des balises avec createElement
     
 const imageElement = document.createElement("img");
 imageElement.src = project.imageUrl;
@@ -32,75 +28,65 @@ imageElement.src = project.imageUrl;
 const titleElement = document.createElement("figcaption");
 titleElement.innerText = project.title;
     
-// Rattachement de la balise projet à la section gallery
+// Rattachement de la balise "project" à la section gallery et de l'image/titre à la balise "project" (projectElement)
     
-sectionGallery.appendChild(projectElement);
-    
-// Rattachement de l'image et du titre à la balise projet (projetElement)
-    
+sectionGallery.appendChild(projectElement);    
 projectElement.appendChild(imageElement);
 projectElement.appendChild(titleElement);
 
     }  
   }
 
-// Affichage de tous les travaux par défaut sur la page d'accueil
+// Etape 1.3 : Affichage de tous les travaux sur la page d'accueil
 
 displayWorks(works);
 
-
-// ----------------------------------- Gestion des boutons ----------------------------------- //
-
-// Boutton TOUS
+// Etape 1.4 : Affichage des travaux par catégories
+  
+// Création des boutons de sélection
 
 const buttonAll = document.querySelector(".btn_tous");
+const buttonObjects = document.querySelector(".btn_objets");
+const buttonApparts = document.querySelector(".btn_apparts");
+const buttonHotelsRestos = document.querySelector(".btn_hotelsrestos");
+
+// Affichages par catégories
+
+// Catégorie TOUS
 
 buttonAll.addEventListener("click", () => { document.querySelector(".gallery").innerHTML='';
   displayWorks(works);
 });
 
-// Boutton OBJETS
+// Catégorie sélectionnée
 
-const buttonObjects = document.querySelector(".btn_objets");
-const worksObjects = works.filter((works) => {
-  return works.categoryId === 1;
+const worksObjects = works.filter((item) => {
+  return item.categoryId === 1;
 });
-
 buttonObjects.addEventListener("click", () => { document.querySelector(".gallery").innerHTML='';
   displayWorks(worksObjects);
 });
 
-// Boutton APPARTEMENTS
-
-const buttonApparts = document.querySelector(".btn_apparts");
-const worksApparts = works.filter((works) => { 
-  return works.categoryId === 2;
+const worksApparts = works.filter((item) => { 
+  return item.categoryId === 2;
 });
-
 buttonApparts.addEventListener("click", () => { document.querySelector(".gallery").innerHTML='';
   displayWorks(worksApparts);
 });
 
-// Boutton HOTELS & RESTAURANTS
-
-const buttonHotelsRestos = document.querySelector(".btn_hotelsrestos");
-const worksHotelsRestos = works.filter((works) => {
-  return works.categoryId === 3;
+const worksHotelsRestos = works.filter((item) => {
+  return item.categoryId === 3;
 });
-
 buttonHotelsRestos.addEventListener("click", () => { document.querySelector(".gallery").innerHTML=''; 
   displayWorks(worksHotelsRestos);
 });
-
- }
+}
 
 getData();
 
+// ETAPE 2 : ------------------------------ Apparition des différents éléments à la connexion ------------------------------//
 
-// ------------------------------ Apparition des différents éléments à la connexion ------------------------------//
-
-
-// Rattachement des constantes aux éléments correspondants du DOM
+// Etape 2.1 : Rattachement des éléments du DOM
 
 const ed = document.querySelector(".edition");
 const modify1 = document.querySelector(".modify_1");
@@ -115,9 +101,9 @@ const modalAdd = document.querySelector(".modal_add");
 const returnModal = document.querySelector(".arrow");
 const closeModal = document.querySelector(".close");
 
-// Apparition/disparition/modification des éléments avec conditions 
+// Etape 2.2 : Apparition/disparition/modification des éléments avec condition 
 
-if (sessionStorage.getItem("token")) {
+if (typeof sessionStorage.getItem("token") === "string") { 
 
 // Apparition bande noire édition
 
@@ -142,13 +128,13 @@ login.addEventListener("click", () => {
   sessionStorage.removeItem("token"); location.reload("index.html");
 });
 
-// Ouverture modale
+// Etape 3 : ----------------------------------------- Les modales ----------------------------------------- //
+
+// Etape 3.1 : Ouverture et fermeture de la 1ère modale
 
 modify2.addEventListener("click", () => {
   modal.style.display = 'inline'; modalGallery.style.display = 'block', modalAdd.style.display = 'none';
 })
-
-// Fermeture modale
 
 cross.addEventListener("click", () => {
   modal.style.display = 'none';
@@ -157,12 +143,11 @@ cross.addEventListener("click", () => {
 modal.addEventListener("click", () => {
   modal.style.display = 'none';
 })
-
-modalGallery.addEventListener('click', (event) => {
-  event.stopPropagation();
+modalGallery.addEventListener('click', (e) => {
+  e.stopPropagation();
 })
 
-// Ouverture/Fermeture modale Ajout photo
+// Etape 3.2 : Ouverture et Fermeture de la 2nd modale
 
 add.addEventListener("click", () => {
   modalGallery.style.display = 'none'; modalAdd.style.display = 'block';
@@ -171,20 +156,18 @@ add.addEventListener("click", () => {
 closeModal.addEventListener("click", () => {
   modal.style.display = 'none'; 
 })
-
-modalAdd.addEventListener('click', (event) => {
-  event.stopPropagation();
+modalAdd.addEventListener('click', (e) => {
+  e.stopPropagation();
 })
 
-// Retour modale (gallerie)
+// Retour à la 1ère modale
 
 returnModal.addEventListener("click", () => {
   modalAdd.style.display = 'none'; modalGallery.style.display = 'block';
 })
+}
 
 // Redirection vers la page Login si utilisateur non connecté
-
-}
 
 else {
   login.addEventListener("click", () => {
@@ -192,17 +175,13 @@ else {
   })
 }
 
+// Etape 4 : ---------------------- Affichage et suppresion des travaux dans la modale avec la fonction getDataModal() ---------------------- //
 
-// ---------------------------------------- Affichage des travaux dans la modale ---------------------------------------- //
-
-
-// Récupération des données depuis l'API dans le fichier works
+// Etape 4.1 : Récupération des données depuis l'API dans le tableau worksModal
 
 const getDataModal = async () => {
   const responseModal = await fetch("http://localhost:5678/api/works");
   const worksModal = await responseModal.json();
-
-// Création d'une boucle
 
 for (let i = 0; i < worksModal.length; i++) {
 
@@ -211,12 +190,12 @@ for (let i = 0; i < worksModal.length; i++) {
   // Récupération de l'élément du DOM de la modale où l'on va afficher les projets de Sophie Bluel
       
   const sectionGalleryModal = document.querySelector(".image_mini");
+
+// Etape 4.2 : Affichage des travaux dans la modale
       
-  // Création d'une balise dédiée à un projet
+  // Création d'une balise dédiée à un projet et de ses balises enfants avec createElement
       
   const projectElementModal = document.createElement("projectModal");
-  
-  // Création des balises avec createElement
       
   const imageElementModal = document.createElement("img");
   imageElementModal.src = projectModal.imageUrl;
@@ -227,12 +206,9 @@ for (let i = 0; i < worksModal.length; i++) {
   const garbageElementModal = document.createElement("i");
   garbageElementModal.classList.add("fa-regular", "fa-trash-can");
 
-  // Rattachement de la balise projet à la section galerie modale
+  // Rattachement de la balise projet à la section galerie modale et de l'image/titre/icône poubelle à la balise projet modal (projectELementModal)
       
-  sectionGalleryModal.appendChild(projectElementModal);
-      
-  // Rattachement de l'image, du titre et de l'icône à la balise projet modal (projectElementModal)
-      
+  sectionGalleryModal.appendChild(projectElementModal);     
   projectElementModal.appendChild(imageElementModal);
   projectElementModal.appendChild(titleElementModal);
   projectElementModal.appendChild(garbageElementModal);
@@ -245,12 +221,12 @@ for (let i = 0; i < worksModal.length; i++) {
   projectElementModal.appendChild(scaleElementModal);
   };
 
-  // Suppression des travaux dans la modale en cliquant sur la poubelle
+  // Etape 4.3 : Suppression des travaux dans la modale en cliquant sur la poubelle //
 
-  if (sessionStorage.getItem("token")) {
+  if (typeof sessionStorage.getItem("token") === "string") {
 
     garbageElementModal.addEventListener("click", (e) => {
-      e.preventDefault();
+      e.preventDefault()
       
     const imageToDelete = projectModal.id;
   
@@ -258,61 +234,113 @@ for (let i = 0; i < worksModal.length; i++) {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + window.sessionStorage.getItem("token"),
+      'Authorization': 'Bearer ' + sessionStorage.getItem("token"),
   },
-    })
-  
-    })
-  
-  }
-
-};
-
+        }).then(res=>console.log(res,"rest")).catch(err=>console.log('error',err))
+      })
+    }
+  };
 }
 
 getDataModal();
 
+// Etape 5 : --------------------------------------- Ajout des travaux depuis la modale --------------------------------------- //
 
-// Ajout des travaux depuis la modale 
-
-// Rattachement des constantes aux éléments correspondants du DOM
+// Etape 5.1 : Affichage de l'image dans la modale
 
 const addPicture = document.querySelector(".add_picture");
 const addWorks = document.querySelector(".add_works");
-const newPicture = document.createElement("img");
+let newPicture = document.createElement("img");
+const insert = document.querySelector("#imageUrl");
 
-let insert = document.createElement('input');
-insert.type = 'file';
-insert.accept = 'image/*';
-
-addPicture.addEventListener('click', () => {
-  
-  insert.onchange = () => {
-    let fichier = insert.files[0];
-    let reader = new FileReader();
-    reader.onload = () => {
-      newPicture.src = reader.result;
+    insert.onchange = () => {
+      let fichier = insert.files[0];
+      let src = URL.createObjectURL(fichier);
+      newPicture.src = src;
       addWorks.appendChild(newPicture);
-      sendData(newPicture)
-    };
-    reader.readAsDataURL(fichier);
-  };
-  insert.click();
- 
+      document.querySelector(".add_works i").style.display='none';
+      document.querySelector(".add_works label").style.display='none';
+      document.querySelector(".format_size").style.display='none';
+      };
+  
+      addPicture.addEventListener('submit', (e) => { e.preventDefault();
+        insert.click();
+      });
+
+// Etape 5.2 : Vérification de la validité des champs URL, titre et catégorie
+
+const verifField = () => {
+  let imgValue = document.querySelector("#imageUrl").value;
+  let titleValue = document.querySelector(".title_form").value;
+  let categoryValue = document.querySelector(".category_form").value;
+  const errorForm = document.querySelector(".error_form");
+
+  if (imgValue === "") {
+    errorForm.style.display = 'block';
+    return false
+  } if (titleValue === "") {
+    errorForm.style.display = 'block';
+    return false
+  } if (categoryValue === "") {
+    errorForm.style.display = 'block';
+    return false
+  } else {
+    errorForm.style.display = 'none';
+    return true
+  }
+}
+
+// Etape 5.3 : Fonction qui fait passer le bouton d'envoie de la modale en vert quand les champs sont remplis 
+
+const greenButton = () => {
+  let imgValue = document.querySelector("#imageUrl").value;
+  let titleValue = document.querySelector(".title_form").value;
+  let categoryValue = document.querySelector(".category_form").value;
+
+  if (titleValue != '' & categoryValue != 0 & imgValue != '') {
+      document.getElementById("validate").style.backgroundColor = "#1D6154";
+  } 
+}
+
+document.querySelector("#imageUrl").addEventListener('change', () => {
+  greenButton();
 });
 
-function sendData(img){
-console.log(img)
-}
+document.querySelector(".title_form").addEventListener('input', () => {
+  greenButton();
+});
 
-const validate = document.querySelector(".validate");
+document.querySelector(".category_form").addEventListener('input', () => {
+  greenButton();
+});
 
-validate.addEventListener('click', function(event){
-  event.preventDefault();
-  let titleNewImage = document.querySelector(".title_form").value;
-console.log(titleNewImage);
-  let categoryNewImage = document.querySelector(".category_form").value;
-  console.log(categoryNewImage);
-}
+// Etape 5.4 : Envoie des travaux vers l'API
 
-)
+const form = document.querySelector("#form_container");
+
+form.addEventListener ("submit", (e) => {
+  e.preventDefault();
+  const result = verifField();
+  if (result === false)
+    return
+  
+  const formData = new FormData(form);
+
+  const file = document.querySelector("#imageUrl");
+  formData.append("image", file.files[0], "image.jpeg");
+
+  for (item of formData) {
+    console.log(item[0], item[1]);
+  };
+ 
+  fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem("token"),
+        },
+        body: formData,
+      })
+      .then(res => res.json())
+      .then(res => console.log(res))
+});
+

@@ -129,10 +129,12 @@ li:hover, .ancre_login:hover {
 .ancre_login {
 	text-decoration: none;
     color: #000;
+	cursor: pointer;
 }
 
 .logout {
 	display: none;
+	cursor: pointer;
 }
 
 #introduction {
@@ -183,6 +185,7 @@ li:hover, .ancre_login:hover {
 	display: none;
 	align-items: center;
 	margin-left: 23px;
+	cursor: pointer;
 }
 
 .modal {
@@ -215,6 +218,7 @@ li:hover, .ancre_login:hover {
 	margin-top: 10px;
 	margin-bottom: 10px;
 	margin-right: 15px;
+	cursor: pointer;
 }
 
 .title_modal {
@@ -253,6 +257,7 @@ li:hover, .ancre_login:hover {
 	background-color: black;
 	border-radius: 2.5px;
 	padding: 4.5px;
+	cursor: pointer;
   }
 
   .image_mini .fa-solid {
@@ -263,6 +268,7 @@ li:hover, .ancre_login:hover {
 	background-color: black;
 	border-radius: 2.5px;
 	padding: 4.5px;
+	cursor: pointer;
   }
 
 .border {
@@ -280,6 +286,7 @@ li:hover, .ancre_login:hover {
 	padding: 10px 40px 10px 40px;
 	margin-bottom: 20px;
 	margin-top: 40px;
+	cursor: pointer;
 }
 
 .delete {
@@ -307,6 +314,7 @@ li:hover, .ancre_login:hover {
 
 .modal_icons i {
 	font-size: 25px;
+	cursor: pointer;
 }
 
 .add_works {
@@ -328,8 +336,7 @@ li:hover, .ancre_login:hover {
 .add_works img {
 	margin: auto;
 	height: 230px;
-	width: 50%;
-	margin-top: -213px;
+	width: 45%;
 	object-fit: cover;
 }
 
@@ -337,8 +344,8 @@ li:hover, .ancre_login:hover {
 	display: none;
 }*/
 
-.add_works button {
-	width: 50%;
+.add_works label {
+	width: 44%;
 	margin: auto;
 	margin-top: 20px;
 	margin-bottom: 12px;
@@ -348,6 +355,7 @@ li:hover, .ancre_login:hover {
 	outline: none;
 	padding: 13px;
 	border: #CBD6DC;
+	cursor: pointer;
 }
 
 .format_size {
@@ -398,6 +406,12 @@ li:hover, .ancre_login:hover {
 	box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.09);
 }
 
+.error_form {
+	color: red;
+	margin-top: 60px;
+	display: none;
+}
+
 .border2 {
 	border-top: 1px solid #B3B3B3;
 	width: 76%;
@@ -405,15 +419,17 @@ li:hover, .ancre_login:hover {
 	margin-top: 50px;
 }
 
-.validate {
+#validate{
 	background-color: #A7A7A7;
+	border: #A7A7A7;
 	color: 	#FFFFFF;
 	width: 30%;
 	margin: auto;
 	border-radius: 20px;
 	padding: 10px 20px 10px 20px;
 	margin-top: 30px;
-
+	cursor: pointer;
+	margin-bottom: 25px;
 }
 
 .filtres {
@@ -435,6 +451,7 @@ li:hover, .ancre_login:hover {
 .btn_tous:hover, .btn_objets:hover, .btn_apparts:hover, .btn_hotelsrestos:hover {
 	color: white;
 	background-color: #1D6154;
+	cursor: pointer;
 }
 	
 

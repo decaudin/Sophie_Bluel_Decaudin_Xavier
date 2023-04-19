@@ -76,26 +76,30 @@
 					</div>
 				</div>
 				<h1 class="title_modal">Ajout photo</h1>
-				<div class="add_works">
-					<i class="fa-sharp fa-regular fa-image"></i>
-					<button class="add_picture">+ Ajouter photo</button>
-					<p class="format_size">jpg, png : 4mo max</p>
-				</div>
-				<div class="title_picture">
-					<label class="title_name" for="title">Titre</label>
-					<input class="title_form" type="title" id="title" name="title">
-				</div>
-				<div class="category_picture">
-					<label class="category_name" for="title">Catégorie</label>
-					<select class="category_form">
-						<option value=""></option>
-						<option value="1">Objets</option>
-						<option value="2">Appartements</option>
-						<option value="3">Hôtels & restaurants</option>
-					</select>
-				</div>
-				<div class="border2"></div>
-				<p class="validate">Valider</p>
+				<form id="form_container">
+					<div class="add_works">
+						<i class="fa-sharp fa-regular fa-image"></i>
+						<input type="file" id="imageUrl" accept="image/*" style="display:none" >
+                    	<label for="imageUrl" class="add_picture">+ Ajouter Photo</label>
+						<p class="format_size">jpg, png : 4mo max</p>
+					</div>
+					<div class="title_picture">
+						<label class="title_name" for="title">Titre</label>
+						<input class="title_form" type="text" id="title" name="title">
+					</div>
+					<div class="category_picture">
+						<label class="category_name" for="title">Catégorie</label>
+						<select class="category_form" name="category">
+							<option value=""></option>
+							<option value="1">Objets</option>
+							<option value="2">Appartements</option>
+							<option value="3">Hôtels & restaurants</option>
+						</select>
+					</div>
+					<p class="error_form">Champs vide ou invalide</p>
+					<div class="border2"></div>
+					<input type="submit" id="validate" value="Valider">
+				</form>
 			</div>
 		</aside>
 		</div>
@@ -105,7 +109,7 @@
 			<button class="btn_apparts">Appartements</button>
 			<button class="btn_hotelsrestos">Hôtels & restaurants</button>
 		</div>
-		<div class="gallery">
+		<div class="gallery" id="gallery">
 		</div>
 	</section>
 	<section id="contact">
