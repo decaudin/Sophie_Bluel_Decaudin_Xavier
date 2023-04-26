@@ -1,41 +1,41 @@
 // Etape 1 --------------------------- Création d'une fonction de récupération et d'affichage des données getData() --------------------------- //
 
-// Etape 1.1 : Récupération des données depuis l'API dans le tableau works
+// Etape 1.1 : Création d'une fonction displayWorks d'affichage des Travaux dans la page d'accueil
+
+const displayWorks = async (nameArray) => {
+
+  for (let i = 0; i < nameArray.length; i++) {
+  
+  const project = nameArray[i];
+      
+  // Récupération de l'élément du DOM qui accueillera les projets de Sophie Bluel
+      
+  const sectionGallery = document.querySelector(".gallery");
+      
+  // Création des balises et récupération de l'URL et du titre du projet
+      
+  const projectElement = document.createElement("project");
+      
+  const imageElement = document.createElement("img");
+  imageElement.src = project.imageUrl;
+          
+  const titleElement = document.createElement("figcaption");
+  titleElement.innerText = project.title;
+      
+  // Rattachement de la balise "project" à la section gallery et de l'image/titre à la balise "project" (projectElement)
+      
+  sectionGallery.appendChild(projectElement);    
+  projectElement.appendChild(imageElement);
+  projectElement.appendChild(titleElement);
+  
+  }  
+}
+
+// Etape 1.2 : Récupération des données depuis l'API dans le tableau works
 
  const getData = async () => {
     let response = await fetch("http://localhost:5678/api/works");
     let works = await response.json();
-
-// Etape 1.2 : Création d'une fonction displayWorks d'affichage des Travaux
-
-const displayWorks = async (nameArray) => {
-
-for (let i = 0; i < nameArray.length; i++) {
-
-const project = nameArray[i];
-    
-// Récupération de l'élément du DOM qui accueillera les projets de Sophie Bluel
-    
-const sectionGallery = document.querySelector(".gallery");
-    
-// Création des balises et récupération de l'URL et du titre du projet
-    
-const projectElement = document.createElement("project");
-    
-const imageElement = document.createElement("img");
-imageElement.src = project.imageUrl;
-        
-const titleElement = document.createElement("figcaption");
-titleElement.innerText = project.title;
-    
-// Rattachement de la balise "project" à la section gallery et de l'image/titre à la balise "project" (projectElement)
-    
-sectionGallery.appendChild(projectElement);    
-projectElement.appendChild(imageElement);
-projectElement.appendChild(titleElement);
-
-    }  
-  }
 
 // Etape 1.3 : Affichage de tous les travaux sur la page d'accueil
 
@@ -50,7 +50,7 @@ const buttonObjects = document.querySelector(".btn_objets");
 const buttonApparts = document.querySelector(".btn_apparts");
 const buttonHotelsRestos = document.querySelector(".btn_hotelsrestos");
 
-// Affichages par catégories
+// Affichage par catégories
 
 // Catégorie TOUS
 
@@ -86,7 +86,7 @@ getData();
 
 // ETAPE 2 : ------------------------------ Apparition des différents éléments à la connexion ------------------------------//
 
-// Etape 2.1 : Rattachement des éléments du DOM
+// Etape 2.1 : Récupération et rattachement des éléments du DOM
 
 const ed = document.querySelector(".edition");
 const modify1 = document.querySelector(".modify_1");
@@ -175,13 +175,13 @@ else {
   })
 }
 
-// Etape 4 : ---------------------- Affichage et suppresion des travaux dans la modale avec la fonction getDataModal() ---------------------- //
+// Etape 4 : ---------------------- Affichage et suppression des travaux dans la modale avec la fonction getDataModal() ---------------------- //
 
 // Etape 4.1 : Récupération des données depuis l'API dans le tableau worksModal
 
 const getDataModal = async () => {
-  const responseModal = await fetch("http://localhost:5678/api/works");
-  const worksModal = await responseModal.json();
+  let responseModal = await fetch("http://localhost:5678/api/works");
+  let worksModal = await responseModal.json();
 
 for (let i = 0; i < worksModal.length; i++) {
 
@@ -191,7 +191,7 @@ for (let i = 0; i < worksModal.length; i++) {
       
   const sectionGalleryModal = document.querySelector(".image_mini");
 
-// Etape 4.2 : Affichage des travaux dans la modale
+  // Etape 4.2 : Affichage des travaux dans la modale
       
   // Création d'une balise dédiée à un projet et de ses balises enfants avec createElement
       
@@ -221,37 +221,82 @@ for (let i = 0; i < worksModal.length; i++) {
   projectElementModal.appendChild(scaleElementModal);
   };
 
-  // Etape 4.3 : Suppression des travaux dans la modale en cliquant sur la poubelle //
+// Etape 4.3 : Suppression des travaux dans la modale en cliquant sur la poubelle //
 
   if (typeof sessionStorage.getItem("token") === "string") {
 
-    garbageElementModal.addEventListener("click", (e) => {
-      e.preventDefault()
-      
-    const imageToDelete = projectModal.id;
-  
-    fetch(`http://localhost:5678/api/works/${imageToDelete}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + sessionStorage.getItem("token"),
-  },
-        }).then(res=>console.log(res,"rest")).catch(err=>console.log('error',err))
-      })
-    }
-  };
-}
+    garbageElementModal.addEventListener("click", () => { 
+    const imageToDelete = projectModal.id
+    deleteWork(imageToDelete);
+    })};
 
-getDataModal();
+  }};
+
+  getDataModal();
+  
+  const deleteWork = (ident) => {
+
+    fetch(`http://localhost:5678/api/works/${ident}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + sessionStorage.getItem("token"),
+      },
+            })
+          .then(res=>console.log(res,"rest")).catch(err=>console.log('error',err))
+    }
+
+const displayNewWorks = async () => {
+  
+    let response = await fetch("http://localhost:5678/api/works");
+    let newWorksModal = await response.json();
+
+// Fonction de réaffichage des travaux mis à jour en rendant actives les poubelles
+
+const updateModalGallery = (works) => {
+  const sectionGalleryModal = document.querySelector(".image_mini"); 
+  sectionGalleryModal.innerHTML = '';
+  for (let i = 0; i < works.length; i++) {
+    const projectModal = works[i];
+    const projectElementModal = document.createElement('projectModal');
+    const imageElementModal = document.createElement('img');
+    imageElementModal.src = projectModal.imageUrl;
+    const titleElementModal = document.createElement('figcaption');
+    titleElementModal.innerText = 'éditer';
+    const garbageElementModal = document.createElement('i');
+    garbageElementModal.classList.add('fa-regular', 'fa-trash-can');
+    projectElementModal.appendChild(imageElementModal);
+    projectElementModal.appendChild(titleElementModal);
+    projectElementModal.appendChild(garbageElementModal);
+    if (i === 0 ) {
+      const scaleElementModal = document.createElement('i');
+      scaleElementModal.classList.add('fa-solid', 'fa-arrows-up-down-left-right');
+      projectElementModal.appendChild(scaleElementModal);
+    };
+    sectionGalleryModal.appendChild(projectElementModal);
+    garbageElementModal.addEventListener('click', () => {
+      const imageToDelete = projectModal.id;
+      deleteWork(imageToDelete);
+      works = works.filter(item => item.id !== imageToDelete);
+      updateModalGallery(works);
+      document.querySelector(".gallery").innerHTML="";
+      displayWorks(works);
+    });
+  }
+}
+updateModalGallery(newWorksModal);
+};
+
+displayNewWorks();
 
 // Etape 5 : --------------------------------------- Ajout des travaux depuis la modale --------------------------------------- //
 
 // Etape 5.1 : Affichage de l'image dans la modale
 
-const addPicture = document.querySelector(".add_picture");
-const addWorks = document.querySelector(".add_works");
+let addPicture = document.querySelector(".add_picture");
+let addWorks = document.querySelector(".add_works");
 let newPicture = document.createElement("img");
-const insert = document.querySelector("#imageUrl");
+let insert = document.querySelector("#imageUrl");
 
     insert.onchange = () => {
       let fichier = insert.files[0];
@@ -320,19 +365,25 @@ const form = document.querySelector("#form_container");
 
 form.addEventListener ("submit", (e) => {
   e.preventDefault();
-  const result = verifField();
+  let result = verifField();
   if (result === false)
     return
   
-  const formData = new FormData(form);
+  let formData = new FormData(form);
 
-  const file = document.querySelector("#imageUrl");
+  let file = document.querySelector("#imageUrl");
   formData.append("image", file.files[0], "image.jpeg");
-
-  for (item of formData) {
-    console.log(item[0], item[1]);
-  };
- 
+  
+  // Vider les champs du formulaire et remettre le bouton en gris une fois les données saisies envoyées 
+  
+  document.querySelector(".add_works img").src = "";
+  document.querySelector(".add_works i").style.display = 'block';
+  document.querySelector(".add_works label").style.display = 'block';
+  document.querySelector(".format_size").style.display = 'block';
+  document.querySelector(".title_form").value = "";
+  document.querySelector(".category_form").value = "";
+  document.getElementById('validate').style.backgroundColor = '#A7A7A7';
+  
   fetch("http://localhost:5678/api/works", {
         method: "POST",
         headers: {
@@ -342,5 +393,61 @@ form.addEventListener ("submit", (e) => {
       })
       .then(res => res.json())
       .then(res => console.log(res))
+  
+  const getNewData = async () => {
+    let response = await fetch("http://localhost:5678/api/works");
+    let newWorks = await response.json();
+    setTimeout(getNewData, 500);
+
+  // Réaffichage dans la page d'accueil des travaux
+
+    document.querySelector(".gallery").innerHTML = "";
+    displayWorks(newWorks);
+
+  // Réaffichage dans la modale des travaux et réactivation du bouton poubelle
+      
+      document.querySelector(".image_mini").innerHTML = "";
+      for (let i = 0; i < newWorks.length; i++) {
+
+        const projectModal = newWorks[i];
+            
+        const sectionGalleryModal = document.querySelector(".image_mini");
+            
+        const projectElementModal = document.createElement("projectModal");
+            
+        const imageElementModal = document.createElement("img");
+        imageElementModal.src = projectModal.imageUrl;
+                
+        const titleElementModal = document.createElement("figcaption");
+        titleElementModal.innerText = 'éditer';
+      
+        const garbageElementModal = document.createElement("i");
+        garbageElementModal.classList.add("fa-regular", "fa-trash-can");
+            
+        sectionGalleryModal.appendChild(projectElementModal);     
+        projectElementModal.appendChild(imageElementModal);
+        projectElementModal.appendChild(titleElementModal);
+        projectElementModal.appendChild(garbageElementModal);
+        
+        if (i === 0 ) {
+          const scaleElementModal = document.createElement("i");
+        scaleElementModal.classList.add("fa-solid", "fa-arrows-up-down-left-right");
+        projectElementModal.appendChild(scaleElementModal);
+        };
+
+        garbageElementModal.addEventListener("click", () => { 
+          const imageToDelete = projectModal.id
+          deleteWork(imageToDelete);
+          })
+      } 
+};
+
+getNewData();
+
 });
+
+
+
+
+
 
