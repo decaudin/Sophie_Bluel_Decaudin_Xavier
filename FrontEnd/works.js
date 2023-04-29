@@ -5,8 +5,6 @@
 const displayWorks = async (nameArray) => {
 
   for (let i = 0; i < nameArray.length; i++) {
-  
-  const project = nameArray[i];
       
   // Récupération de l'élément du DOM qui accueillera les projets de Sophie Bluel
       
@@ -17,10 +15,10 @@ const displayWorks = async (nameArray) => {
   const projectElement = document.createElement("project");
       
   const imageElement = document.createElement("img");
-  imageElement.src = project.imageUrl;
+  imageElement.src = nameArray[i].imageUrl;
           
   const titleElement = document.createElement("figcaption");
-  titleElement.innerText = project.title;
+  titleElement.innerText = nameArray[i].title;
       
   // Rattachement de la balise "project" à la section gallery et de l'image/titre à la balise "project" (projectElement)
       
@@ -184,8 +182,6 @@ const getDataModal = async () => {
   let worksModal = await responseModal.json();
 
 for (let i = 0; i < worksModal.length; i++) {
-
-  const projectModal = worksModal[i];
       
   // Récupération de l'élément du DOM de la modale où l'on va afficher les projets de Sophie Bluel
       
@@ -198,7 +194,7 @@ for (let i = 0; i < worksModal.length; i++) {
   const projectElementModal = document.createElement("projectModal");
       
   const imageElementModal = document.createElement("img");
-  imageElementModal.src = projectModal.imageUrl;
+  imageElementModal.src = worksModal[i].imageUrl;
           
   const titleElementModal = document.createElement("figcaption");
   titleElementModal.innerText = 'éditer';
@@ -226,7 +222,7 @@ for (let i = 0; i < worksModal.length; i++) {
   if (typeof sessionStorage.getItem("token") === "string") {
 
     garbageElementModal.addEventListener("click", () => { 
-    const imageToDelete = projectModal.id
+    const imageToDelete = worksModal[i].id
     deleteWork(imageToDelete);
     })};
 
@@ -257,10 +253,9 @@ const updateModalGallery = (works) => {
   const sectionGalleryModal = document.querySelector(".image_mini"); 
   sectionGalleryModal.innerHTML = '';
   for (let i = 0; i < works.length; i++) {
-    const projectModal = works[i];
     const projectElementModal = document.createElement('projectModal');
     const imageElementModal = document.createElement('img');
-    imageElementModal.src = projectModal.imageUrl;
+    imageElementModal.src = works[i].imageUrl;
     const titleElementModal = document.createElement('figcaption');
     titleElementModal.innerText = 'éditer';
     const garbageElementModal = document.createElement('i');
@@ -275,7 +270,7 @@ const updateModalGallery = (works) => {
     };
     sectionGalleryModal.appendChild(projectElementModal);
     garbageElementModal.addEventListener('click', () => {
-      const imageToDelete = projectModal.id;
+      const imageToDelete = works[i].id;
       deleteWork(imageToDelete);
       works = works.filter(item => item.id !== imageToDelete);
       updateModalGallery(works);
@@ -408,15 +403,13 @@ form.addEventListener ("submit", (e) => {
       
       document.querySelector(".image_mini").innerHTML = "";
       for (let i = 0; i < newWorks.length; i++) {
-
-        const projectModal = newWorks[i];
             
         const sectionGalleryModal = document.querySelector(".image_mini");
             
         const projectElementModal = document.createElement("projectModal");
             
         const imageElementModal = document.createElement("img");
-        imageElementModal.src = projectModal.imageUrl;
+        imageElementModal.src = newWorks[i].imageUrl;
                 
         const titleElementModal = document.createElement("figcaption");
         titleElementModal.innerText = 'éditer';
@@ -436,7 +429,7 @@ form.addEventListener ("submit", (e) => {
         };
 
         garbageElementModal.addEventListener("click", () => { 
-          const imageToDelete = projectModal.id
+          const imageToDelete = newWorks[i].id
           deleteWork(imageToDelete);
           })
       } 
